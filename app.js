@@ -1,11 +1,16 @@
 $(document).ready(function(){
 
+// count to check how many keystrokes have been done before making ajax call
 var locationInputCount = 0;
+// stores options from ajax call
 var locationArray = [];
+// keeps track of what the user has highlighted when using the up or down arrow to autofill
 var selectedIndex = 0;
+// stores dates
 var checkIn = "";
 var checkOut = ""; 
 
+// checks key down during location autofill for up arrow, down arrow, or enter
 checkKeyDown = function(event){
 
 	if (event.keyCode == 40 && selectedIndex < locationArray.length - 1){
@@ -15,7 +20,7 @@ checkKeyDown = function(event){
 		$('#' + selectedIndex).removeClass('active');
 
 		selectedIndex++;
-		console.log(selectedIndex);
+		
 		$('#' + selectedIndex).addClass('active'); 
 
 	} // end of if down arrow
@@ -26,7 +31,7 @@ checkKeyDown = function(event){
 		$('#' + selectedIndex).removeClass('active');
 
 		selectedIndex--;
-		console.log(selectedIndex);
+		
 		$('#' + selectedIndex).addClass('active'); 
 
 	} // end of else if up arrow
@@ -45,6 +50,7 @@ checkKeyDown = function(event){
 
 }; // end of checkKeyDown function
 
+// autofill logic for typing in the locationSearch input
 locationSearch = function() {
 
 	$('#locationSearch').on('input', function() {
@@ -97,6 +103,7 @@ locationSearch = function() {
 };
 //https://api.teleport.org/api/cities/{?search}
 
+// function for hiding and showing amount of rooms based on dropdown choice
 roomsChange = function() {
 	$("#roomAmount").change(function() {
 		stopForLoop = parseInt($("#roomAmount").val()) + 1;
@@ -104,37 +111,36 @@ roomsChange = function() {
 
 		for(i = 1; i < stopForLoop; i++) {
 			roomId = "#room" + i;			
-			console.log(roomId);
+			
 			$(roomId).removeClass('hide');
 			$(roomId).addClass('show');
 		}
 
 		for(i = stopForLoop; i < 10; i++) {
 			roomId = "#room" + i;
-			console.log(roomId);
+			
 			$(roomId).removeClass('show');
 			$(roomId).addClass('hide');
 		}
 	});
 }; // end of roomsChange function
- 
+
+// Validates selections for checkIn input
 checkInValidation = function() {
 
 	$("#checkIn").change(function() {
 		
 		checkIn = new Date(this.value);
-		console.log(checkIn);
-		var indd = checkIn.getDate()+1;
-		var inmm = checkIn.getMonth()+1;
-		var inyyyy = checkIn.getFullYear();
-
-		console.log("checkIn");
-		console.log(indd, inmm, inyyyy);
+		
+		// var indd = checkIn.getDate()+1;
+		// var inmm = checkIn.getMonth()+1;
+		// var inyyyy = checkIn.getFullYear();
 
 		var today = new Date();
-		var dd = today.getDate();
-		var mm = today.getMonth()+1;
-		var yyyy = today.getFullYear();
+		
+		// var dd = today.getDate();
+		// var mm = today.getMonth()+1;
+		// var yyyy = today.getFullYear();
 
 		if (checkIn < today) {
 			$("#error").html("Your check in date is in the past. Unless you have a DeLorean and flux capacitor I would suggest picking a date in the future.")
@@ -157,6 +163,7 @@ checkInValidation = function() {
 
 }; // end of dateValidation function
 
+// Validates selections for checkOut input
 checkOutValidation = function() {
 
 	$("#checkOut").change(function() {
@@ -167,8 +174,7 @@ checkOutValidation = function() {
 
 		if (checkOut < today) {
 			$("#error").html("Your check out date is in the past. Unless you have a DeLorean and flux capacitor I would suggest picking a date in the future.")
-			console.log($("#error"))
-			console.log($("#error")[0].innerHTML)
+
 			$("#checkOut").val("");
 		}	
 
@@ -188,6 +194,7 @@ checkOutValidation = function() {
 
 }; // end of checkOutValidation
 
+// Validates entire form and then allows use of submit button
 validateSubmitButton = function() {
 
 	if($("#error")[0].innerHTML == "" && 

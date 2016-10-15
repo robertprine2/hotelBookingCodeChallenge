@@ -1,3 +1,5 @@
+/*highlights the active choices in the autofill dropdown for location*/
+
 #locationOptions li:hover {
 	background: #eeeeee;
 }
@@ -7,6 +9,8 @@
 	color: #FFFFFF;
 	background: #0099FF;
 }
+
+/* Very basic changes for readability*/
 
 #error {
 	color: red;

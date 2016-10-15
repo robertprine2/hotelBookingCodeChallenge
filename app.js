@@ -65,11 +65,22 @@ locationSearch = function() {
 
 				for(i = 0; i < resultsArray.length; i++){
 					locationArray.push(resultsArray[i].matching_full_name);
-					$('#locationOptions').append('<li id="' + i + '" data-name="' + resultsArray[i].matching_full_name + '">' + resultsArray[i].matching_full_name + '</li>');
+					$('#locationOptions').append('<li class="choices" id="' + i + '" data-name="' + resultsArray[i].matching_full_name + '">' + resultsArray[i].matching_full_name + '</li>');
 				}
 				
+				$('#' + selectedIndex).addClass('active');
+
 				document.onkeydown = checkKeyDown;
 				
+				$('.choices').on('click', function() {
+
+					$('#' + selectedIndex).removeClass('active');
+
+					$('#locationSearch').val($(this).data('name'));
+
+					$('#locationOptions').html('');
+				});
+
 			});
 		}
 

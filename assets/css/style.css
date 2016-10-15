@@ -1,0 +1,10 @@
+#locationOptions li:hover {
+	background: #eeeeee;
+}
+
+#locationOptions li:active,
+#locationOptions li.active {
+	color: #FFFFFF;
+	background: #0099FF;
+	width: 234px;
+}

@@ -2,11 +2,45 @@ $(document).ready(function(){
 
 var locationInputCount = 0;
 var locationArray = [];
-var selectedIndex = -1;
+var selectedIndex = 0;
 var checkIn = "";
 var checkOut = ""; 
 
+checkKeyDown = function(event){
 
+	if (event.keyCode == 40 && selectedIndex < locationArray.length - 1){
+
+		event.preventDefault();
+
+		$('#' + selectedIndex).removeClass('active');
+
+		selectedIndex++;
+		console.log(selectedIndex);
+		$('#' + selectedIndex).addClass('active'); 
+
+	} // end of if down arrow
+	else if (event.keyCode == 38 && selectedIndex > 0) {
+
+		event.preventDefault();
+
+		$('#' + selectedIndex).removeClass('active');
+
+		selectedIndex--;
+		console.log(selectedIndex);
+		$('#' + selectedIndex).addClass('active'); 
+
+	} // end of else if up arrow
+
+	else if(event.keyCode == 13) {
+
+		event.preventDefault();
+
+		$('#locationSearch').val($('#' + selectedIndex).data('name'));
+
+		$('#locationOptions').html('');
+	} // end of else if enter is pressed
+
+}; // end of checkKeyDown function
 
 locationSearch = function() {
 
@@ -31,12 +65,11 @@ locationSearch = function() {
 
 				for(i = 0; i < resultsArray.length; i++){
 					locationArray.push(resultsArray[i].matching_full_name);
-					$('#locationOptions').append('<li>' + resultsArray[i].matching_full_name + '</li>');
+					$('#locationOptions').append('<li id="' + i + '" data-name="' + resultsArray[i].matching_full_name + '">' + resultsArray[i].matching_full_name + '</li>');
 				}
-
-				checkKeyDown(event);
-	
-
+				
+				document.onkeydown = checkKeyDown;
+				
 			});
 		}
 

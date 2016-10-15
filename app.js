@@ -158,6 +158,8 @@ checkOutValidation = function() {
 
 		if (checkOut < today) {
 			$("#error").html("Your check out date is in the past. Unless you have a DeLorean and flux capacitor I would suggest picking a date in the future.")
+			console.log($("#error"))
+			console.log($("#error")[0].innerHTML)
 			$("#checkOut").val("");
 		}	
 
@@ -174,12 +176,28 @@ checkOutValidation = function() {
 
 	});
 
-};
+}; // end of checkOutValidation
 
+validateSubmitButton = function() {
+
+	$('#bookingForm').change(function(){
+
+		if($("#error")[0].innerHTML == "" && 
+			$('#locationSearch').val() != "" &&
+			$('#checkIn').val() != "" &&
+			$('#checkOut').val() != "") {
+
+			$("#submit").prop("disabled", false);
+		}
+
+	});
+
+}; // end of validateSubmitButton function
 
 locationSearch();
 roomsChange(); 
 checkInValidation();
 checkOutValidation();
+validateSubmitButton();
 
 }); // end of document.ready

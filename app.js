@@ -38,6 +38,9 @@ checkKeyDown = function(event){
 		$('#locationSearch').val($('#' + selectedIndex).data('name'));
 
 		$('#locationOptions').html('');
+
+		validateSubmitButton();
+
 	} // end of else if enter is pressed
 
 }; // end of checkKeyDown function
@@ -72,6 +75,9 @@ locationSearch = function() {
 
 				document.onkeydown = checkKeyDown;
 				
+				// Check the validation of form if they just type in their location without clicking or pressing enter.
+				validateSubmitButton();
+
 				$('.choices').on('click', function() {
 
 					$('#' + selectedIndex).removeClass('active');
@@ -79,6 +85,8 @@ locationSearch = function() {
 					$('#locationSearch').val($(this).data('name'));
 
 					$('#locationOptions').html('');
+
+					validateSubmitButton();
 				});
 
 			});
@@ -142,6 +150,7 @@ checkInValidation = function() {
 		} // end of else if checkOut is before checkIn
 		else {
 			$("#error").html("");
+			validateSubmitButton();
 		}
 
 	});
@@ -172,6 +181,7 @@ checkOutValidation = function() {
 
 		else {
 			$("#error").html("");
+			validateSubmitButton();
 		}
 
 	});
@@ -180,17 +190,13 @@ checkOutValidation = function() {
 
 validateSubmitButton = function() {
 
-	$('#bookingForm').change(function(){
+	if($("#error")[0].innerHTML == "" && 
+		$('#locationSearch').val() != "" &&
+		$('#checkIn').val() != "" &&
+		$('#checkOut').val() != "") {
 
-		if($("#error")[0].innerHTML == "" && 
-			$('#locationSearch').val() != "" &&
-			$('#checkIn').val() != "" &&
-			$('#checkOut').val() != "") {
-
-			$("#submit").prop("disabled", false);
-		}
-
-	});
+		$("#submit").prop("disabled", false);
+	}
 
 }; // end of validateSubmitButton function
 
@@ -198,6 +204,5 @@ locationSearch();
 roomsChange(); 
 checkInValidation();
 checkOutValidation();
-validateSubmitButton();
 
 }); // end of document.ready

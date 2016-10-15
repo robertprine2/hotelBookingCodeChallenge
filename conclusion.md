@@ -17,4 +17,4 @@ Items I would have still liked to work on were:
 
 I would probably change how I did Ajax calls since they happened after every keystroke excluding the first 2. That is a lot of calls out and probably unnecessary. 
 
-I would also use Angular or some other library since their logic is most likely more efficient than what I have used.
+I would also use Angular or some other library since their logic is most likely more efficient than what I have made.
